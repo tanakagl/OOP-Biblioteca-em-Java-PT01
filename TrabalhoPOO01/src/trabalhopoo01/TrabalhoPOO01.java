@@ -1,23 +1,33 @@
 package trabalhopoo01;
 
-import java.util.ArrayList;
 import java.util.Scanner;
+
 
 public class TrabalhoPOO01 {
 
 
     public static void main(String[] args) {
-     ArrayList<String> livros = new ArrayList<>();
-     ArrayList<String> usuarios = new ArrayList<>();
+     Usuarios user = new Usuarios();
+     Livros books = new Livros();
      Scanner teclado = new Scanner(System.in);
-     System.out.println("Insira o nome dos livros: ");
-     for(int i=0; i<=5; i++){//Cadastrar Livros
-         System.out.printf("%d- ", i+1);
-         livros.add(teclado.next());  
+     String resp = "";
+     
+     System.out.print("Deseja cadastrar um novo usuario? [s/n]");
+     resp = teclado.next();
+     if(resp.equals("s")){
+         user.inserirDadosUser();
+         System.out.print("Deseja cadastrar um livro? [s/n]");
+         resp = teclado.next();
+         if(resp.equals("s")){
+             System.out.println("");
+            books.inserirDadosUser();
+            }else if(resp.equals("n")){
+             System.out.println("Saindo do programa...");
+         }
+                user.printarUsuariosInseridos();
+                books.printarLivrosInseridos();
      }
-     System.out.println("Livros Cadastrados: ");
-     for(int j=0; j<=5; j++){
-         System.out.print(livros.get(j)+" ");
      }
-    }
-}
+     }
+    
+
