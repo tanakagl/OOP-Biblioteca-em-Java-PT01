@@ -1,72 +1,40 @@
 package trabalhopoo01;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Usuarios {
-    private String nome;
-    private String ender;
-    private String cpf;
-    private String hist;
+
+    ArrayList<String> nome = new ArrayList<>();
+    ArrayList<String> ender = new ArrayList<>();
+    ArrayList<String> cpf = new ArrayList<>();
+    ArrayList<String> hist = new ArrayList<>();
+   
     
     public void inserirDadosUser(){
-          double[][] cadastroUsers = new double[30][30];
-          for(int i=0; i<1; i++){
-              for(int j=i; j<=i; j++){
-              Scanner teclado = new Scanner(System.in);
+              Scanner tecladoInsert = new Scanner(System.in);
               System.out.print("Insira o nome do Usuario: ");
-              this.nome = teclado.next();
+              nome.add(tecladoInsert.nextLine());
               System.out.println("");
               System.out.print("Insira o endereco do Usuario: ");
-              this.ender = teclado.next();
+              ender.add(tecladoInsert.nextLine());
               System.out.println("");
               System.out.print("Insira o CPF do Usuario: ");
-              this.cpf = teclado.next();
+              cpf.add(tecladoInsert.nextLine());
               System.out.println("");
               System.out.print("Insira o historico do Usuario: ");
-              this.hist = teclado.next();
+              hist.add(tecladoInsert.nextLine());
               System.out.println("");
-          }
-    }
     }
     
-    public void printarUsuariosInseridos(){
-        System.out.println("Nome: " + getNome());
-        System.out.println("Endereço: " + getEnder());
-        System.out.println("CPF: " + getCpf());
-        System.out.println("Histórico: " + getHist());
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public String getEnder() {
-        return ender;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public String getHist() {
-        return hist;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public void setEnder(String ender) {
-        this.ender = ender;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public void setHist(String hist) {
-        this.hist = hist;
-    }
-    
+    public void buscarUsuariosInseridos(){
+        Scanner tecladoBusca = new Scanner(System.in);
+        System.out.print("Insira a chave do Usuário que deseja buscar: ");
+        int i = tecladoBusca.nextInt();
+        System.out.println("Nome: " + nome.get(i));
+        System.out.println("Endereço: " + ender.get(i));
+        System.out.println("CPF: " + cpf.get(i));
+        System.out.println("Histórico: " + hist.get(i));
+        }
     
 }

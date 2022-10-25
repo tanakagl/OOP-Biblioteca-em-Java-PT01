@@ -1,100 +1,51 @@
 package trabalhopoo01;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Livros {
-    private String titulo;
-    private String autor;
-    private String editora;
-    private String categoria;
-    private float price;
-    private int quant;
+
+    ArrayList<String> titulo = new ArrayList<>();
+    ArrayList<String> autor = new ArrayList<>();
+    ArrayList<String> editora =  new ArrayList<>();
+    ArrayList<String> categoria =  new ArrayList<>();
+    ArrayList<Float> price = new ArrayList<>();
+    ArrayList<Integer> quant = new ArrayList<>();
     
-        public void inserirDadosUser(){
-          double[][] cadastroLivros = new double[30][30];
-          for(int i=0; i<1; i++){
-              for(int j=i; j<=i; j++){
+    
+        public void inserirDadosLivros(){
               Scanner teclado = new Scanner(System.in);
               System.out.print("Insira o nome do Livro: ");
-              this.titulo = teclado.next();
+              titulo.add(teclado.nextLine());
               System.out.println("");
-              System.out.print("Insira o Autor: ");
-              this.autor = teclado.next();
+              System.out.print("Insira o nome do Autor: ");
+              autor.add(teclado.nextLine());
               System.out.println("");
-              System.out.print("Insira a Editora: ");
-              this.editora = teclado.next();
+              System.out.print("Insira o nome da Editora: ");
+              editora.add(teclado.nextLine());
               System.out.println("");
-              System.out.print("Insira a Categoria: ");
-              this.categoria = teclado.next();
+              System.out.print("Insira a categoria: ");
+              categoria.add(teclado.nextLine());
               System.out.println("");
-              System.out.print("Insira o preço: R$");
-              this.price = teclado.nextFloat();
+              System.out.print("Insira o preço: ");
+              price.add(teclado.nextFloat());
               System.out.println("");
               System.out.print("Insira a quantidade: ");
-              this.quant = teclado.nextInt();
+              quant.add(teclado.nextInt());
               System.out.println("");
-          }
-    }
     }
     
-    public void printarLivrosInseridos(){
-        System.out.println("Título: " + getTitulo());
-        System.out.println("Autor: " + getAutor());
-        System.out.println("Editora " + getEditora());
-        System.out.println("Categoria: " + getCategoria());
-        System.out.println("Preço: " + getPrice());
-        System.out.println("Quantidade: " + getQuant());
-    }
+    public void buscarLivrosInseridos(){
+        Scanner tecladoBusca = new Scanner(System.in);
+        System.out.print("Insira a chave do Livro que deseja buscar: ");
+        int i = tecladoBusca.nextInt();
+        System.out.println("Título: " + titulo.get(i));
+        System.out.println("Autor: " + autor.get(i));
+        System.out.println("Editora " + editora.get(i));
+        System.out.println("Categoria: " + categoria.get(i));
+        System.out.println("Preço: " + price.get(i));
+        System.out.println("Quantidade: " + quant.get(i));
+        }
     
-    
-    
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
 
-    public void setAutor(String autor) {
-        this.autor = autor;
-    }
-
-    public void setEditora(String editora) {
-        this.editora = editora;
-    }
-
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
-    }
-
-    public void setPrice(float price) {
-        this.price = price;
-    }
-
-    public void setQuant(int quant) {
-        this.quant = quant;
-    }
-
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public String getAutor() {
-        return autor;
-    }
-
-    public String getEditora() {
-        return editora;
-    }
-
-    public String getCategoria() {
-        return categoria;
-    }
-
-    public float getPrice() {
-        return price;
-    }
-
-    public int getQuant() {
-        return quant;
-    }
-    
 }
-
