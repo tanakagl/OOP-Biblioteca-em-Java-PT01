@@ -14,6 +14,7 @@ public class Usuarios {
         this.hist = hist;
     }
     
+    
     @Override //toString para printar os dados dos usuarios conforme o pedido
     public String toString(){
         return "Nome Completo: " + nome + " Endereço: " + ender + " CPF: " + cpf + " Histórico de Livros: " + hist;

@@ -6,23 +6,31 @@ public class Livros {
     public String autor;
     public String editora;
     public String categoria;
-    public float price;
+    public double priceVenda;
+    public double priceAluguel;
     public int quant;
+    public String selo;
     
-    public Livros(String titulo, String autor, String editora, String categoria, float price, int quant){ //Constructor Livros
+
+    
+    public Livros(String titulo, String autor, String editora, String categoria, double priceVenda, double priceAluguel, int quant, String selo){ //Constructor Livros
         this.titulo = titulo;
         this.autor = autor;
         this.editora = editora;
         this.categoria = categoria;
-        this.price = price;
-        this.quant =  quant;      
+        this.priceVenda = priceVenda;
+        this.priceAluguel = priceAluguel;
+        this.quant =  quant;   
+        this.selo = selo;
         
-    }
-    @Override //toString para printar os dados dos livros conforme o pedido do usuario
-    public String toString(){
-        return "Título: " + titulo + " Autor: " + autor + " Editora: " + editora + " Categoria: " + categoria + " Preço: R$" + price + " Quantidade Disponível: " + quant;
     }
 
     
+    
+    @Override //toString para printar os dados dos livros conforme o pedido do usuario
+    public String toString(){
+        return "Título: " + titulo + " Autor: " + autor + " Editora: " + editora + " Categoria: " + categoria + " Preço de venda: R$" + priceVenda +" Preço de aluguel: R$" + priceAluguel + " Quantidade Disponível: " + quant + " Selo: " + selo;
+    }
+
     
 }

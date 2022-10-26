@@ -5,11 +5,12 @@ import java.util.Scanner;
 
 
 public class TrabalhoPOO01 {
-
+    
 
     public static void main(String[] args) {
      ArrayList<Livros> books = new ArrayList<Livros>();
      ArrayList<Usuarios> users = new ArrayList<Usuarios>();
+     LivrosMethods livrosMethods = new LivrosMethods();
      int op;
      int codLivro;
      int codUsuario;
@@ -27,38 +28,56 @@ public class TrabalhoPOO01 {
         System.out.println("Opção 6: Local um livro para leitura local");
         System.out.println("Opção 7: Comprar um livro");
         System.out.println("Opção 8: Informar data de Saraus");
+        System.out.println("Opção 9: Buscar todos os livros disponíveis");
         System.out.println("Opção 0: Sair do Programa");
             op = teclado.nextInt();
                 switch(op){
                     case 1:
+                        Scanner digitar1 = new Scanner(System.in);
                         System.out.println("Insira o nome do usuário: ");
-                        String nome = teclado.next();
+                        String nome = digitar1.next();
                         System.out.println("Insira o endereço do usuário: ");
-                        String ender = teclado.next();
+                        String ender = digitar1.next();
                         System.out.println("Insira o CPF: ");
-                        String cpf = teclado.next();
+                        String cpf = digitar1.next();
                         System.out.println("Insira quantos livros foram comprados: ");
-                        int hist = teclado.nextInt();
+                        int hist = digitar1.nextInt();
                         
                         users.add(new Usuarios(nome, ender, cpf, hist));
                         
                         break;
                     case 2:
-                        System.out.println("Insira o título do Livro: ");
-                        String title = teclado.next();
-                        System.out.println("Insira o nome do Autor: ");
-                        String author = teclado.next();
-                        System.out.println("Insira o nome da Editora: ");
-                        String publish =  teclado.next();
-                        System.out.println("Insira a categoria: ");
-                        String category = teclado.next();
-                        System.out.println("Insira o preço: ");
-                        float price =  teclado.nextFloat();
-                        System.out.println("Insira a quantidade: ");
-                        int quant = teclado.nextInt();
+                        String title;
+                        String author;
+                        String publish;
+                        String category;
+                        double priceVenda;
+                        double priceAluguel;
+                        int quant;
+                        String selo;
                         
-                        books.add(new Livros(title, author, publish, category, price, quant));
-                       
+                        Scanner digitar2 = new Scanner(System.in);
+                            System.out.println("Insira o título do Livro: ");
+                            title = digitar2.nextLine();
+                            System.out.println("Insira o nome do Autor: ");
+                            author = digitar2.nextLine();
+                            System.out.println("Insira o nome da Editora: ");
+                            publish =  digitar2.nextLine();
+                            System.out.println("Insira a categoria: ");
+                            category = digitar2.nextLine();
+                            System.out.println("Insira o selo do livro: ");
+                            selo = digitar2.nextLine();
+                            System.out.println("Insira o preço de venda: ");
+                            priceVenda =  digitar2.nextFloat();
+                            System.out.println("Insira o preço de aluguel: ");
+                            priceAluguel =  digitar2.nextFloat();
+                            System.out.println("Insira a quantidade: ");
+                            quant = digitar2.nextInt();
+                            
+                        double novoPrecoVenda = livrosMethods.seloLivroVenda(priceVenda, selo);
+                        double novoPrecoAluguel = livrosMethods.seloLivroAluguel(priceAluguel, selo);
+                        books.add(new Livros(title, author, publish, category, novoPrecoVenda, novoPrecoAluguel, quant, selo));
+                        
                         break;
                     case 3:
                         System.out.print("Insira qual o código do usuário: ");
@@ -71,6 +90,7 @@ public class TrabalhoPOO01 {
                         codLivro = teclado.nextInt();
                         System.out.println(books.get(codLivro));
                         System.out.println(" ");
+                        
                         break;
                     case 5:
                         
@@ -83,6 +103,11 @@ public class TrabalhoPOO01 {
                         break;
                     case 8:
                         
+                        break;
+                    case 9:
+                        for(int i=0; i<=books.size(); i++){
+                            System.out.println(books.get(i) + "Código do Livro " + i);
+                        }
                         break;
                     case 0:
                         System.out.println("Saindo");
