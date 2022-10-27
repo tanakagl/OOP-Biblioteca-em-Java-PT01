@@ -1,7 +1,10 @@
 package trabalhopoo01;
 
+//import java.util.ArrayList;
+//import java.util.Scanner;
+
 public class Livros {
-    //Declaracao dos atributos
+     //Declaracao dos atributos
     public String titulo;
     public String autor;
     public String editora;
@@ -10,6 +13,7 @@ public class Livros {
     public double priceAluguel;
     public int quant;
     public String selo;
+    public float venda;
     
 
     
@@ -31,6 +35,5 @@ public class Livros {
     public String toString(){
         return "Título: " + titulo + " Autor: " + autor + " Editora: " + editora + " Categoria: " + categoria + " Preço de venda: R$" + priceVenda +" Preço de aluguel: R$" + priceAluguel + " Quantidade Disponível: " + quant + " Selo: " + selo;
     }
-
     
 }
