@@ -1,6 +1,4 @@
-
 package trabalhopoo01;
-
 
 public class LivrosMethods {
     
@@ -28,8 +26,16 @@ public class LivrosMethods {
                         newPriceAluguel = pa;
                  return newPriceAluguel;
              }
-            
-            
-           
-           
+             public int compra(int quant){
+        int quantnova = 0;
+        int i;
+        String resp = " ";
+        if(resp.equals("s")){
+            for(i=0; i<= quant; i++){
+                quantnova += 1;
+            } 
+    
+}
+        return quantnova;
+}
 }

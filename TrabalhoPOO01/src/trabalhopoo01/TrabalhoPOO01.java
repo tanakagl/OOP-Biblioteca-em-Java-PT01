@@ -1,6 +1,8 @@
 package trabalhopoo01;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
 
@@ -100,13 +102,19 @@ public class TrabalhoPOO01 {
                         break;
                     case 7:
                         
+                        System.out.println("Digite o id do livro que deseja comprar: ");
+                        codLivro = teclado.nextInt();
+                        System.out.println(books.get(codLivro));
+                        System.out.println(" ");
+                        
+                        
                         break;
                     case 8:
                         
                         break;
                     case 9:
                         for(int i=0; i<=books.size(); i++){
-                            System.out.println(books.get(i) + "Código do Livro " + i);
+                            System.out.println(books.get(i) + "Código do Livro " + i);                                                                           
                         }
                         break;
                     case 0:
