@@ -14,8 +14,7 @@ public class TrabalhoPOO01 {
      ArrayList<Usuarios> users = new ArrayList<Usuarios>();
      LivrosMethods booksMethods = new LivrosMethods();
      UserMethods usersMethods = new UserMethods();
-     Date dataHoje = new Date();
-     SimpleDateFormat formatarData = new SimpleDateFormat("dd/MM/yyyy");
+     Data comparar = new Data();
      int op;
      int codLivro;
      int codUsuario;
@@ -34,7 +33,8 @@ public class TrabalhoPOO01 {
         System.out.println("Opção 7: Comprar um livro");
         System.out.println("Opção 8: Informar data de Saraus");
         System.out.println("Opção 9: Buscar todos os livros disponíveis");
-        System.out.println("Opção 10: Verificar caixa da Livraria");
+        System.out.println("Opção 10: Realizar devolução de livro");
+        System.out.println("Opção 11: Verificar caixa da Livraria");
         System.out.println("Opção 0: Sair do Programa");
             op = teclado.nextInt();
                 switch(op){
@@ -45,8 +45,7 @@ public class TrabalhoPOO01 {
                        String cpf;
                        int histCompra = 0;
                        int histAluguel = 0;
-                       int dataUser;
-                       
+                       String tipoUser;
                        
                         Scanner digitar1 = new Scanner(System.in);
                         System.out.println("Insira o nome do usuário: ");
@@ -55,11 +54,11 @@ public class TrabalhoPOO01 {
                         ender = digitar1.nextLine();
                         System.out.println("Insira o CPF: ");
                         cpf = digitar1.nextLine();
-                        System.out.println("Insira a data de inscrição: ");
-                        dataUser = digitar1.nextInt();
+                        System.out.println("Inserir tipo de usuario: ");
+                        tipoUser = digitar1.nextLine();
                         
                         
-                        users.add(new Usuarios(nome, ender, cpf, histCompra, histAluguel, dataUser));
+                        users.add(new Usuarios(nome, ender, cpf, histCompra, histAluguel, tipoUser));
                         
                         break;
                     case 2:
@@ -71,7 +70,7 @@ public class TrabalhoPOO01 {
                         double priceAluguel;
                         int quant;
                         String selo;
-                        int dataLivro;
+                        String dataLivro;
                         
                         Scanner digitar2 = new Scanner(System.in);
                             System.out.println("Insira o título do Livro: ");
@@ -85,7 +84,7 @@ public class TrabalhoPOO01 {
                             System.out.println("Insira o selo do livro: ");
                             selo = digitar2.nextLine();
                             System.out.println("Insira a data de cadastro do livro: ");
-                            dataLivro = digitar2.nextInt();
+                            dataLivro = digitar2.nextLine();
                             System.out.println("Insira o preço de venda: ");
                             priceVenda =  digitar2.nextFloat();
                             System.out.println("Insira o preço de aluguel: ");
@@ -119,15 +118,21 @@ public class TrabalhoPOO01 {
                         System.out.print("Insira o código do usuário: ");
                         codUsuario = teclado.nextInt();
                         System.out.println(users.get(codUsuario));
-                        System.out.println("Data de Hoje:" + dataHoje.getDay() + "/" + dataHoje.getMonth() + "/" + dataHoje.getYear());
-                        System.out.print("Insira a data de aluguel: ");
-                        int dataAluguel = teclado.nextInt();
                         System.out.println("Deseja confirmar o aluguel deste livro? [s/n]");
                         resp = teclado.next();
                         if(resp.equals("s")){
-                            users.get(codUsuario).histAluguel++;
-                            books.get(codLivro).quant--;
+                          int dataResp = comparar.compararData();
+                          int disponibilidade = books.get(codLivro).quant;
+                            if(disponibilidade != 0 && dataResp == 1){
+                                System.out.println("Livro alugado com sucesso!");
+                                users.get(codUsuario).histAluguel++;
+                                books.get(codLivro).quant--;
+                            }else{
+                                System.out.println("Data Insirida Inválida");
+                                break;
+                            }
                         }else{
+                            System.out.println("Erro ao alugar o livro!");
                             break;
                         }
                         
@@ -138,9 +143,7 @@ public class TrabalhoPOO01 {
                         System.out.println(books.get(codLivro));
                         System.out.print("Insira o código do usuário: ");
                         codUsuario = teclado.nextInt();
-                        System.out.println("Data de Hoje:" + dataHoje.getDay() + "/" + dataHoje.getMonth() + "/" + dataHoje.getYear());
-                        System.out.print("Insira a data para leitura: ");
-                        dataAluguel = teclado.nextInt();
+                        
                         System.out.println("Deseja confirmar a leitura local deste livro? [s/n]");
                         resp = teclado.next();
                         if(resp.equals("s")){
@@ -175,6 +178,9 @@ public class TrabalhoPOO01 {
                         }
                         break;
                     case 10:
+                        
+                        break;
+                    case 11:
                         
                         break;
                     case 0:

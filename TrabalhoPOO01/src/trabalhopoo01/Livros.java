@@ -14,11 +14,11 @@ public class Livros {
     public int quant;
     public String selo;
     public float venda;
-    public int dataLivro;
+    public String dataLivro;
     
 
     
-    public Livros(String titulo, String autor, String editora, String categoria, double priceVenda, double priceAluguel, int quant, String selo, int dataLivro){ //Constructor Livros
+    public Livros(String titulo, String autor, String editora, String categoria, double priceVenda, double priceAluguel, int quant, String selo, String dataLivro){ //Constructor Livros
         this.titulo = titulo;
         this.autor = autor;
         this.editora = editora;

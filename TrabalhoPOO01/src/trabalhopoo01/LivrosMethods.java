@@ -27,13 +27,4 @@ public class LivrosMethods {
                  return newPriceAluguel;
              }
             
-             public int compraLivro(int quant){
-                    int quantnova = quant;{
-                     for(int i=0; i<= quant; i++){
-                      quantnova += 1;
-                    } 
-    
-}
-        return quantnova;
-}
 }

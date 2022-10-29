@@ -1,40 +1,46 @@
 package trabalhopoo01;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class Data {
-    
-   /* Scanner x = new Scanner(System.in);
-                        System.out.println("Data de aluguel: ");
-                        int r = x.nextInt();
-                        System.out.println("Mes de aluguel: ");
-                        int m = x.nextInt();
-                        Date hoje = new Date();
-                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                        Date d = new Date();
-                        d.setDate(r); // dia 
-                        d.setMonth(m-1); // mês
-                        d.setYear(120); // ano
-                        System.out.println("Data de aluguel: " + sdf.format(d));
-                        if(r == r){
-                            d.setDate(r+3);
-                            System.out.println("Data de devolução: " + sdf.format(d));
-                        }*/
-    String data;
-    
-    
-    void inicio(){
+    //Caso o aluguel seja possivel, retornara valor 1, caso nao, retornara valor 0.
+    public int compararData(){
+        Scanner dataTeclado = new Scanner(System.in);
+        System.out.print("Insira a data de hoje: ");
+        String hoje = dataTeclado.nextLine();
+        System.out.print("Insira a data de aluguel: ");
+        String inicio = dataTeclado.nextLine();
+        System.out.print("Insira a data de devolução: ");
+        String fim = dataTeclado.nextLine();
+        LocalDate data1 = LocalDate.parse(hoje, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        LocalDate data2 = LocalDate.parse(inicio, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        LocalDate data3 = LocalDate.parse(fim, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        LocalDate dataTesteDias = LocalDate.parse(hoje, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        LocalDate dataTesteSemana = LocalDate.parse(hoje, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        LocalDate dataTesteMes = LocalDate.parse(hoje, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         
-    }
-    void fim(){
+        dataTesteDias = data1.plusDays(3);
+        dataTesteSemana = data2.plusWeeks(1);
+        dataTesteMes = data2.plusMonths(1);
         
-    }
-    void disponivel(){
-        
-    }
-    void indisponivel(){
-        
-    }
-    
+        boolean verificaDias = dataTesteDias.isAfter(data2);
+        boolean verificaSemana = dataTesteSemana.isAfter(data3);
+        boolean verificaMes = dataTesteMes.isAfter(data3);
+        int resp = 0;
+        if(verificaDias == false){
+            resp+= 0;
+        }else if(verificaDias == true && verificaSemana == true || verificaMes == false){
+            resp+= 0;
+        }else if(verificaDias == true && verificaSemana == false && verificaMes == true){
+            resp+= 1;
+        }
+        return resp;
 }
+}
+    
+    
+ 
 
 

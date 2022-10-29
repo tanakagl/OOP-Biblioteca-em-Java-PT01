@@ -8,22 +8,22 @@ public class Usuarios {
     public int histCompra;
     public int histAluguel;
     public int compra;
-    public int dataUser;
+    public String tipoUser;
     
-    public Usuarios(String nome, String ender, String cpf, int histCompra, int histAluguel, int dataUser){ //Constructor dos Usuarios
+    public Usuarios(String nome, String ender, String cpf, int histCompra, int histAluguel, String tipoUser){ //Constructor dos Usuarios
         this.nome = nome;
         this.ender = ender;
         this.cpf = cpf;
         this.histCompra = histCompra;
         this.histAluguel = histAluguel;
-        this.dataUser = dataUser;
+        this.tipoUser = tipoUser;
     }
 
     
     
     @Override //toString para printar os dados dos usuarios conforme o pedido
     public String toString(){
-        return "Nome Completo: " + nome + " Endereço: " + ender + " CPF: " + cpf + " Histórico de Livros Comprados: " + histCompra + " Histórico de Livros Alugados: " + histAluguel + " Data de inscrição: " + dataUser;
+        return "Nome Completo: " + nome + " Endereço: " + ender + " CPF: " + cpf + " Histórico de Livros Comprados: " + histCompra + " Histórico de Livros Alugados: " + histAluguel + " Tipo de usuário: " + tipoUser;
     }
 
 }
