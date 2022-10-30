@@ -12,17 +12,19 @@ public class TrabalhoPOO01 {
     public static void main(String[] args) {
      ArrayList<Livros> books = new ArrayList<Livros>();
      ArrayList<Usuarios> users = new ArrayList<Usuarios>();
+     ArrayList<Promocoes> promotions = new ArrayList<Promocoes>();
      LivrosMethods booksMethods = new LivrosMethods();
      UserMethods usersMethods = new UserMethods();
+     Promocoes promo = new Promocoes();
      Data comparar = new Data();
+     String primeiraCompra = "";
      int op;
      int codLivro;
      int codUsuario;
      String resp;
      Scanner teclado = new Scanner(System.in);
-     
         System.out.println("Bem Vindo ao sistema da Livraria Martelo de Assis!");
-        do{
+        do{ 
         System.out.println("O que deseja realizar?");
         System.out.println("Opção 1: Cadastrar Novo Usuário");
         System.out.println("Opção 2: Cadastrar Novo Livro");
@@ -153,6 +155,8 @@ public class TrabalhoPOO01 {
                         }
                     case 7:
                         
+                        System.out.println("Insira a data de hoje: ");
+                        String dataHoje = teclado.next();
                         System.out.print("Digite o id do livro que deseja comprar: ");
                         codLivro = teclado.nextInt();
                         System.out.println(books.get(codLivro));
@@ -164,13 +168,39 @@ public class TrabalhoPOO01 {
                         if(resp.equals("s")){
                             users.get(codUsuario).histCompra++;
                             books.get(codLivro).quant--;
+                            users.get(codUsuario).histCompraPromo++;
                             System.out.println("Compra confirmada! Agradecemos a preferência!");
+                            //Verifica promocao
+                                if(users.get(codUsuario).histAux != 0){
+                                     int resulComp = promo.compararDatas(primeiraCompra,dataHoje);
+                                        int resulPromo = promo.verificarPromo(users.get(codUsuario).histCompraPromo, users.get(codUsuario).histAluguel, users.get(codUsuario).tipoUser, resulComp);
+                                        switch(resulPromo){
+                                            case 1:
+                                                System.out.println("Direito a 1 livro grátis!");
+                                                break;
+                                            case 2:
+                                                System.out.println("Direito a Geek por um mes!");
+                                                users.get(codUsuario).tipoUser = "Geek";
+                                                break;
+                                            case 3:
+                                                System.out.println("Direito a Premium por três meses!");
+                                                users.get(codUsuario).tipoUser = "Premium";
+                                                break;
+                                            default:
+                                                System.out.println("Não há promoções disponíveis para você no momento.");
+                                                break;
+                                            }
+                                    }else if(users.get(codUsuario).histAux == 0){
+                                    System.out.println("Não há promoções disponíveis para você no momento.");
+                                    primeiraCompra = dataHoje;
+                                    users.get(codUsuario).histAux++;          
+                        }
                         }else{
                             break;
                         }
                         
                     case 8:
-                   
+              
                         break;
                     case 9:
                         for(int i=0; i<=books.size(); i++){

@@ -9,6 +9,11 @@ public class Usuarios {
     public int histAluguel;
     public int compra;
     public String tipoUser;
+    public String dataCompra;
+    public String dataAluguel;
+    public int histCompraPromo; //atributo q ira zerar depois de 3 meses
+    public int histAluguelPromo; //atributo q ira zerar depois de 3 meses
+    public int histAux;
     
     public Usuarios(String nome, String ender, String cpf, int histCompra, int histAluguel, String tipoUser){ //Constructor dos Usuarios
         this.nome = nome;
