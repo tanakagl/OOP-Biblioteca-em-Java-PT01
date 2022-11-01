@@ -42,6 +42,8 @@ public class UserMethods {
                  return newPriceLeitura;
              }
    
+  
+   
     
 }
 

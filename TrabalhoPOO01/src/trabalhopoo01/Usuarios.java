@@ -14,14 +14,16 @@ public class Usuarios {
     public int histCompraPromo; //atributo q ira zerar depois de 3 meses
     public int histAluguelPromo; //atributo q ira zerar depois de 3 meses
     public int histAux;
+    public String dataCadastro;
     
-    public Usuarios(String nome, String ender, String cpf, int histCompra, int histAluguel, String tipoUser){ //Constructor dos Usuarios
+    public Usuarios(String nome, String ender, String cpf, int histCompra, int histAluguel, String tipoUser, String dataCadastro){ //Constructor dos Usuarios
         this.nome = nome;
         this.ender = ender;
         this.cpf = cpf;
         this.histCompra = histCompra;
         this.histAluguel = histAluguel;
         this.tipoUser = tipoUser;
+        this.dataCadastro = dataCadastro;
     }
 
     

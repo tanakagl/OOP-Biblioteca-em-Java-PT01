@@ -17,14 +17,18 @@ public class TrabalhoPOO01 {
      UserMethods usersMethods = new UserMethods();
      Promocoes promo = new Promocoes();
      Data comparar = new Data();
+     Faturamento caixa =  new Faturamento();
      String primeiraCompra = "";
      int op;
      int codLivro;
      int codUsuario;
+     int contadorPosUser = 0;
+     int contadorPosLivro = 0;
      String resp;
      Scanner teclado = new Scanner(System.in);
         System.out.println("Bem Vindo ao sistema da Livraria Martelo de Assis!");
-        do{ 
+        do{
+        System.out.println("");
         System.out.println("O que deseja realizar?");
         System.out.println("Opção 1: Cadastrar Novo Usuário");
         System.out.println("Opção 2: Cadastrar Novo Livro");
@@ -37,6 +41,7 @@ public class TrabalhoPOO01 {
         System.out.println("Opção 9: Buscar todos os livros disponíveis");
         System.out.println("Opção 10: Realizar devolução de livro");
         System.out.println("Opção 11: Verificar caixa da Livraria");
+        System.out.println("Opção 12: Avançar datas");  
         System.out.println("Opção 0: Sair do Programa");
             op = teclado.nextInt();
                 switch(op){
@@ -48,19 +53,26 @@ public class TrabalhoPOO01 {
                        int histCompra = 0;
                        int histAluguel = 0;
                        String tipoUser;
+                       String dataCadastro;
+                       
                        
                         Scanner digitar1 = new Scanner(System.in);
-                        System.out.println("Insira o nome do usuário: ");
+                        System.out.print("Insira o nome do usuário: ");
                         nome = digitar1.nextLine();
-                        System.out.println("Insira o endereço do usuário: ");
+                        System.out.print("Insira o endereço do usuário: ");
                         ender = digitar1.nextLine();
-                        System.out.println("Insira o CPF: ");
+                        System.out.print("Insira o CPF: ");
                         cpf = digitar1.nextLine();
-                        System.out.println("Inserir tipo de usuario: ");
+                        System.out.print("Inserir tipo de usuario: ");
                         tipoUser = digitar1.nextLine();
-                        
-                        
-                        users.add(new Usuarios(nome, ender, cpf, histCompra, histAluguel, tipoUser));
+                        System.out.print("Insira a data de cadastro:");
+                        dataCadastro = digitar1.next();
+                        //Chama constructor
+                        users.add(new Usuarios(nome, ender, cpf, histCompra, histAluguel, tipoUser, dataCadastro));
+                        //Caso tiver valor de mensalidade, adiciona ao caixa
+                        caixa.valoresMensal += caixa.mensalidade(users.get(contadorPosUser).tipoUser);
+                        System.out.println("Código do User: [" + contadorPosUser + "]");
+                        contadorPosUser++;
                         
                         break;
                     case 2:
@@ -75,30 +87,31 @@ public class TrabalhoPOO01 {
                         String dataLivro;
                         
                         Scanner digitar2 = new Scanner(System.in);
-                            System.out.println("Insira o título do Livro: ");
+                            System.out.print("Insira o título do Livro: ");
                             title = digitar2.nextLine();
-                            System.out.println("Insira o nome do Autor: ");
+                            System.out.print("Insira o nome do Autor: ");
                             author = digitar2.nextLine();
-                            System.out.println("Insira o nome da Editora: ");
+                            System.out.print("Insira o nome da Editora: ");
                             publish =  digitar2.nextLine();
-                            System.out.println("Insira a categoria: ");
+                            System.out.print("Insira a categoria: ");
                             category = digitar2.nextLine();
-                            System.out.println("Insira o selo do livro: ");
+                            System.out.print("Insira o selo do livro: ");
                             selo = digitar2.nextLine();
-                            System.out.println("Insira a data de cadastro do livro: ");
+                            System.out.print("Insira a data de cadastro do livro: ");
                             dataLivro = digitar2.nextLine();
-                            System.out.println("Insira o preço de venda: ");
+                            System.out.print("Insira o preço de venda: ");
                             priceVenda =  digitar2.nextFloat();
-                            System.out.println("Insira o preço de aluguel: ");
+                            System.out.print("Insira o preço de aluguel: ");
                             priceAluguel =  digitar2.nextFloat();
-                            System.out.println("Insira a quantidade: ");
+                            System.out.print("Insira a quantidade: ");
                             quant = digitar2.nextInt();
-                            
                             
                         double novoPrecoVenda = booksMethods.seloLivroVenda(priceVenda, selo);
                         double novoPrecoAluguel = booksMethods.seloLivroAluguel(priceAluguel, selo);
+                        //Chama constructor
                         books.add(new Livros(title, author, publish, category, novoPrecoVenda, novoPrecoAluguel, quant, selo, dataLivro));
-                        
+                        System.out.println("Código do Livro: [" + contadorPosLivro + "]");
+                        contadorPosLivro++;
                         break;
                     case 3:
                         System.out.print("Insira qual o código do usuário: ");
@@ -123,16 +136,26 @@ public class TrabalhoPOO01 {
                         System.out.println("Deseja confirmar o aluguel deste livro? [s/n]");
                         resp = teclado.next();
                         if(resp.equals("s")){
+                          int verifUser = booksMethods.verificaUsersAluguel(users.get(codUsuario).tipoUser, books.get(codLivro).selo);
                           int dataResp = comparar.compararData();
                           int disponibilidade = books.get(codLivro).quant;
-                            if(disponibilidade != 0 && dataResp == 1){
+                          if(verifUser == 0){
+                            System.out.println("Você não pode alugar este livro.");
+                          }else{
+                              if(disponibilidade != 0 && dataResp == 1){
                                 System.out.println("Livro alugado com sucesso!");
                                 users.get(codUsuario).histAluguel++;
                                 books.get(codLivro).quant--;
+                                
+                                //Adicionando valor no caixa
+                                caixa.valoresCompra += books.get(codLivro).priceAluguel;
                             }else{
                                 System.out.println("Data Insirida Inválida");
-                                break;
-                            }
+                                break;}
+                              break;
+                          }
+                          
+                          
                         }else{
                             System.out.println("Erro ao alugar o livro!");
                             break;
@@ -154,22 +177,48 @@ public class TrabalhoPOO01 {
                             break;
                         }
                     case 7:
-                        
-                        System.out.println("Insira a data de hoje: ");
+                        double desconto;
+                        System.out.print("Insira a data de hoje: ");
                         String dataHoje = teclado.next();
                         System.out.print("Digite o id do livro que deseja comprar: ");
                         codLivro = teclado.nextInt();
-                        System.out.println(books.get(codLivro));
+                        System.out.print(books.get(codLivro));
                         System.out.print("Insira o código do usuário: ");
                         codUsuario = teclado.nextInt();
                         System.out.println(users.get(codUsuario));
-                        System.out.println("Deseja confirmar a compra deste livro? [s/n]");
+                        int respTipoUser = booksMethods.verificaUsersCompra(users.get(codUsuario).tipoUser);
+                        System.out.print("Deseja confirmar a compra deste livro? [s/n]");
                         resp = teclado.next();
                         if(resp.equals("s")){
+                            int disponibilidade = books.get(codLivro).quant;
+                            if(disponibilidade != 0){
                             users.get(codUsuario).histCompra++;
                             books.get(codLivro).quant--;
                             users.get(codUsuario).histCompraPromo++;
+                            //Verifica se ha descontos disponiveis
+                           System.out.print("Desconto de: ");
+                        switch(respTipoUser){
+                            case 1:
+                                System.out.println("5%");
+                                desconto = books.get(codLivro).priceVenda - (books.get(codLivro).priceVenda * 0.05f);
+                                break;
+                            case 2:
+                                System.out.println("10%");
+                                desconto = books.get(codLivro).priceVenda - (books.get(codLivro).priceVenda * 0.1f);
+                                break;
+                            case 3:
+                                System.out.println("15%");
+                                desconto = books.get(codLivro).priceVenda - (books.get(codLivro).priceVenda * 0.15f);
+                                break;
+                            default:
+                                System.out.println("0%");
+                                desconto = books.get(codLivro).priceVenda;
+                                break;
+                        }   
+                            //Adicionando valor no caixa
+                            caixa.valoresCompra += desconto;
                             System.out.println("Compra confirmada! Agradecemos a preferência!");
+                            
                             //Verifica promocao
                                 if(users.get(codUsuario).histAux != 0){
                                      int resulComp = promo.compararDatas(primeiraCompra,dataHoje);
@@ -196,6 +245,10 @@ public class TrabalhoPOO01 {
                                     users.get(codUsuario).histAux++;          
                         }
                         }else{
+                            System.out.println("Erro ao comprar o livro. Indisponível!");
+                            }
+                            
+                        }else{
                             break;
                         }
                         
@@ -211,6 +264,16 @@ public class TrabalhoPOO01 {
                         
                         break;
                     case 11:
+                        System.out.printf("Valor total de Aluguéis: %.2f", caixa.valoresAluguel);
+                        System.out.println("");
+                        System.out.printf("Valor total de Compras: %.2f", caixa.valoresCompra);
+                        System.out.println("");
+                        System.out.printf("Valor total de Mensalidades: %.2f", caixa.valoresMensal);
+                        System.out.println("");
+                        System.out.printf("Valor total: " + caixa.totalCaixa());
+                        System.out.println("");
+                        break;
+                    case 12:
                         
                         break;
                     case 0:

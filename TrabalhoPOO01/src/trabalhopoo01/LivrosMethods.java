@@ -27,4 +27,28 @@ public class LivrosMethods {
                  return newPriceAluguel;
              }
             
+             public int verificaUsersAluguel(String tipoUser, String selo){
+                    int resp = 1;// retorna possivel
+                    if(!tipoUser.equals("Premium") && selo.equals("Premium")){
+                        resp = 0; // retorna valor para nao alugar livros premiuns
+                    }else if(selo.equals("Best Seller")){
+                        resp = 0; // retorna 0 para nao alugar
+                    }else if(tipoUser.equals("Premium") && selo.equals("Premium")){
+                        resp = 1;
+                    }
+                     return resp;  
+                   }
+             
+             public int verificaUsersCompra(String tipoUser){
+                    int resp = 0;// retorna nenhum tipo
+                    if(tipoUser.equals("Bookworm")){
+                        resp = 1; // retorna bookworm, desconto de 5%
+                    }else if(tipoUser.equals("Geek")){
+                        resp = 2; // retorna geek, desconto de 10%
+                    }else if(tipoUser.equals("Premium")){
+                        resp = 3; // retorna premium, desconto de 15%
+                    }
+                     return resp;  
+                   }
+            
 }
