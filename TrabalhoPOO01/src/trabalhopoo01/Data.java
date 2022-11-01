@@ -38,6 +38,48 @@ public class Data {
         }
         return resp;
 }
+
+public void avancarData(String dataSis){
+    Scanner avanDate = new Scanner(System.in);
+    int quant = 0;
+    LocalDate dataSistem = LocalDate.parse(dataSis, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    System.out.println("Escolha a opção de data que deseja avançar: ");
+    System.out.println("Opção 1: Avançar dias");
+    System.out.println("Opção 2: Avançar semanas");
+    System.out.println("Opção 3: Avançar meses");
+    System.out.println("Opção 4: Avançar anos");
+    System.out.println("Opção 0: Cancelar");
+    //Escolhe a opção para avançar as datas
+    int op = avanDate.nextInt();
+    switch(op){
+        case 1:
+            System.out.print("Quantos dias deseja avançar? ");
+            quant = avanDate.nextInt();
+            dataSistem.plusDays(quant);
+            break;
+        case 2:
+            System.out.print("Quantas semanas deseja avançar? ");
+            quant = avanDate.nextInt();
+            dataSistem.plusWeeks(quant);
+            break;
+        case 3:
+            System.out.println("Quantos meses deseja avançar? ");
+            quant = avanDate.nextInt();
+            dataSistem.plusMonths(quant);
+            break;
+        case 4:
+            System.out.println("Quantos anos deseja avançar? ");
+            quant = avanDate.nextInt();
+            dataSistem.plusYears(quant);
+            break;
+        case 0:
+            System.out.println("Cancelando...");
+            break;
+        default:
+            System.out.println("Opção Inválida!");
+            break;
+    }
+}
 }
     
     

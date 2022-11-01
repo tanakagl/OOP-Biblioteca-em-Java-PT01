@@ -1,6 +1,8 @@
 package trabalhopoo01;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
@@ -25,8 +27,12 @@ public class TrabalhoPOO01 {
      int contadorPosUser = 0;
      int contadorPosLivro = 0;
      String resp;
+     String dataSistem = "01/11/2022";
+     String dataAux;
+
      Scanner teclado = new Scanner(System.in);
         System.out.println("Bem Vindo ao sistema da Livraria Martelo de Assis!");
+        System.out.print("Data do sistema: " + dataSistem);
         do{
         System.out.println("");
         System.out.println("O que deseja realizar?");
@@ -135,7 +141,7 @@ public class TrabalhoPOO01 {
                         System.out.println(users.get(codUsuario));
                         System.out.println("Deseja confirmar o aluguel deste livro? [s/n]");
                         resp = teclado.next();
-                        if(resp.equals("s")){
+                        if(resp.equalsIgnoreCase("s")){
                           int verifUser = booksMethods.verificaUsersAluguel(users.get(codUsuario).tipoUser, books.get(codLivro).selo);
                           int dataResp = comparar.compararData();
                           int disponibilidade = books.get(codLivro).quant;
@@ -171,7 +177,7 @@ public class TrabalhoPOO01 {
                         
                         System.out.println("Deseja confirmar a leitura local deste livro? [s/n]");
                         resp = teclado.next();
-                        if(resp.equals("s")){
+                        if(resp.equalsIgnoreCase("s")){
                             books.get(codLivro).quant--;
                         }else{
                             break;
@@ -189,7 +195,7 @@ public class TrabalhoPOO01 {
                         int respTipoUser = booksMethods.verificaUsersCompra(users.get(codUsuario).tipoUser);
                         System.out.print("Deseja confirmar a compra deste livro? [s/n]");
                         resp = teclado.next();
-                        if(resp.equals("s")){
+                        if(resp.equalsIgnoreCase("s")){
                             int disponibilidade = books.get(codLivro).quant;
                             if(disponibilidade != 0){
                             users.get(codUsuario).histCompra++;
@@ -201,6 +207,7 @@ public class TrabalhoPOO01 {
                             case 1:
                                 System.out.println("5%");
                                 desconto = books.get(codLivro).priceVenda - (books.get(codLivro).priceVenda * 0.05f);
+                                
                                 break;
                             case 2:
                                 System.out.println("10%");
@@ -230,6 +237,10 @@ public class TrabalhoPOO01 {
                                             case 2:
                                                 System.out.println("Direito a Geek por um mes!");
                                                 users.get(codUsuario).tipoUser = "Geek";
+                                                dataAux = dataHoje;
+                                                LocalDate auxDate = LocalDate.parse(dataAux, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                                                auxDate.plusMonths(1);
+
                                                 break;
                                             case 3:
                                                 System.out.println("Direito a Premium por três meses!");
@@ -274,7 +285,7 @@ public class TrabalhoPOO01 {
                         System.out.println("");
                         break;
                     case 12:
-                        
+                        comparar.avancarData(dataSistem);
                         break;
                     case 0:
                         System.out.println("Saindo");

@@ -14,9 +14,9 @@ public class Faturamento{
    
    public double mensalidade(String tipoUser){
        double mensal = 0;
-       if(tipoUser.equals("Geek")){
+       if(tipoUser.equalsIgnoreCase("Geek")){
            mensal = 50;
-       }else if(tipoUser.equals("Premium")){
+       }else if(tipoUser.equalsIgnoreCase("Premium")){
            mensal = 70;
        }else{
            mensal = 0;

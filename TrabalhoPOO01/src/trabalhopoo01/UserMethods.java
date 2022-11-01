@@ -4,13 +4,13 @@ public class UserMethods {
     
  public double vendasUsers(double pv, String tipoUser){//Tipos de usuarios para compra
                 double newPriceVenda = 0;
-                 if(tipoUser.equals("Bookworm")){
+                 if(tipoUser.equalsIgnoreCase("Bookworm")){
                      newPriceVenda = pv - (pv * 0.05);
                  }
-                 else if(tipoUser.equals("Geek")){
+                 else if(tipoUser.equalsIgnoreCase("Geek")){
                      newPriceVenda = pv - (pv * 0.1);
                  }
-                 else if(tipoUser.equals("Premium")){
+                 else if(tipoUser.equalsIgnoreCase("Premium")){
                      newPriceVenda = pv - (pv * 0.15);
                  }else{
                      newPriceVenda = pv;
@@ -21,7 +21,7 @@ public class UserMethods {
       
                 double newPriceAluguel = 0;
 
-                 if(tipoUser.equals("Premium")){
+                 if(tipoUser.equalsIgnoreCase("Premium")){
                      newPriceAluguel = 0;
                  }else{
                      newPriceAluguel = pa;
@@ -32,9 +32,9 @@ public class UserMethods {
       
                 double newPriceLeitura = 0;
                 
-                 if(tipoUser.equals("Geek")){
+                 if(tipoUser.equalsIgnoreCase("Geek")){
                      newPriceLeitura = 0;
-                 }else if(tipoUser.equals("Premium")){
+                 }else if(tipoUser.equalsIgnoreCase("Premium")){
                      newPriceLeitura = 0;
                  }else{
                      newPriceLeitura = pl;
