@@ -272,7 +272,13 @@ public class TrabalhoPOO01 {
                         }
                         break;
                     case 10:
-                        
+                        Scanner devol = new Scanner(System.in);
+                        System.out.print("Insira o código do livro que deseja devolver: ");
+                        codLivro = devol.nextInt();
+                        System.out.print("Insira o código do usuário: ");
+                        codUsuario = devol.nextInt();
+                        books.get(codLivro).quant--;
+                        users.get(codUsuario).histAluguel--;
                         break;
                     case 11:
                         System.out.printf("Valor total de Aluguéis: %.2f", caixa.valoresAluguel);
