@@ -50,5 +50,13 @@ public class LivrosMethods {
                     }
                      return resp;  
                    }
+             
+             public int verificaLivro100(int histAluguel){
+                 if(histAluguel >=100){
+                     return 1;
+                 }else{
+                     return 0;
+                 }
+             }
             
 }

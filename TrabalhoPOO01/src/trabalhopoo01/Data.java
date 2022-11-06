@@ -38,51 +38,32 @@ public class Data {
         }
         return resp;
 }
-
-public void avancarData(String dataSis){
-    Scanner avanDate = new Scanner(System.in);
-    int quant = 0;
-    LocalDate dataSistem = LocalDate.parse(dataSis, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-    System.out.println("Escolha a opção de data que deseja avançar: ");
-    System.out.println("Opção 1: Avançar dias");
-    System.out.println("Opção 2: Avançar semanas");
-    System.out.println("Opção 3: Avançar meses");
-    System.out.println("Opção 4: Avançar anos");
-    System.out.println("Opção 0: Cancelar");
-    //Escolhe a opção para avançar as datas
-    int op = avanDate.nextInt();
-    switch(op){
-        case 1:
-            System.out.print("Quantos dias deseja avançar? ");
-            quant = avanDate.nextInt();
-            dataSistem.plusDays(quant);
-            break;
-        case 2:
-            System.out.print("Quantas semanas deseja avançar? ");
-            quant = avanDate.nextInt();
-            dataSistem.plusWeeks(quant);
-            break;
-        case 3:
-            System.out.println("Quantos meses deseja avançar? ");
-            quant = avanDate.nextInt();
-            dataSistem.plusMonths(quant);
-            break;
-        case 4:
-            System.out.println("Quantos anos deseja avançar? ");
-            quant = avanDate.nextInt();
-            dataSistem.plusYears(quant);
-            break;
-        case 0:
-            System.out.println("Cancelando...");
-            break;
-        default:
-            System.out.println("Opção Inválida!");
-            break;
+    public float devol(){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy"); 
+        Scanner teclado2 = new Scanner(System.in);
+        float multa = 0;
+        System.out.print("Insira a data de hoje: ");
+        String hoje = teclado2.nextLine();
+        System.out.print("Insira a data de devolução: ");
+        String fim = teclado2.nextLine();
+        LocalDate dataHoje = LocalDate.parse(hoje, formatter);
+        LocalDate dataDev = LocalDate.parse(fim, formatter);
+        if(dataHoje.isAfter(dataDev) == true){
+            System.out.println("Quantos dias de atraso?"); 
+            int atraso = teclado2.nextInt();
+            multa = 5*atraso;
+        }else if(dataHoje.isBefore(dataDev) == true){
+            System.out.println("Não há multa!");
+            multa = 0;
+        }else if(dataHoje.isEqual(dataDev) == true){
+            System.out.println("Não há multa!");
+            multa = 0;
+        }
+        return multa;
     }
-}
+
 }
     
     
  
-
 

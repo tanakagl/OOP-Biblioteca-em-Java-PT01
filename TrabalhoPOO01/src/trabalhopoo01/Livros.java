@@ -15,6 +15,7 @@ public class Livros {
     public String selo;
     public float venda;
     public String dataLivro;
+    public int historico;
     
 
     
