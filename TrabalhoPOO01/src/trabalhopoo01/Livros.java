@@ -16,10 +16,11 @@ public class Livros {
     public float venda;
     public String dataLivro;
     public int historico;
+    public int exclusiv;
     
 
     
-    public Livros(String titulo, String autor, String editora, String categoria, double priceVenda, double priceAluguel, int quant, String selo, String dataLivro){ //Constructor Livros
+    public Livros(String titulo, String autor, String editora, String categoria, double priceVenda, double priceAluguel, int quant, String selo, String dataLivro, int exclusiv){ //Constructor Livros
         this.titulo = titulo;
         this.autor = autor;
         this.editora = editora;
@@ -29,13 +30,14 @@ public class Livros {
         this.quant =  quant;   
         this.selo = selo;
         this.dataLivro = dataLivro;
+        this.exclusiv = exclusiv;
     }
 
     
     
     @Override //toString para printar os dados dos livros conforme o pedido do usuario
     public String toString(){
-        return "Título: " + titulo + " Autor: " + autor + " Editora: " + editora + " Categoria: " + categoria + " Preço de venda: R$" + priceVenda +" Preço de aluguel: R$" + priceAluguel + " Quantidade Disponível: " + quant + " Selo: " + selo + " Data de Cadastro do Livro: " + dataLivro;
+        return "Título: " + titulo + " Autor: " + autor + " Editora: " + editora + " Categoria: " + categoria + " Preço de venda: R$" + priceVenda +" Preço de aluguel: R$" + priceAluguel + " Quantidade Disponível: " + quant + " Selo: " + selo + " Data de Cadastro do Livro: " + dataLivro + " Exclusividade código: " + exclusiv;
     }
     
 }

@@ -24,13 +24,13 @@ public class TrabalhoPOO01 {
      String primeiraCompra = "";
      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
      LocalDate dataSis = LocalDate.parse(dataSistem, formatter);
-     LocalDate dataCadastroUser;
      int op;
      int codLivro;
      int codUsuario;
      int contadorPosUser = 0;
      int contadorPosLivro = 0;
      String resp;
+     String primeiroAluguel;
 
      String dataAux;
 
@@ -58,6 +58,7 @@ public class TrabalhoPOO01 {
         System.out.println("Opção 12: Manipular datas");
         System.out.println("Opção 13: Verificar vencimentos");
         System.out.println("Opção 14: Verificar descontos");
+        System.out.println("Opção 15: Verificar fim de promoções de 3 meses");
         System.out.println("Opção 0: Sair do Programa");
 
             op = teclado.nextInt();
@@ -102,6 +103,7 @@ public class TrabalhoPOO01 {
                         int quant;
                         String selo;
                         String dataLivro;
+                        int exclusiv;
                         
                         Scanner digitar2 = new Scanner(System.in);
                             System.out.print("Insira o título do Livro: ");
@@ -122,11 +124,13 @@ public class TrabalhoPOO01 {
                             priceAluguel =  digitar2.nextFloat();
                             System.out.print("Insira a quantidade: ");
                             quant = digitar2.nextInt();
+                            System.out.print("Insira [1] para exclusivo compra, [2] para exclusivo leitura/aluguel ou [0] para ambos: ");
+                            exclusiv = digitar2.nextInt();
                             
                         double novoPrecoVenda = booksMethods.seloLivroVenda(priceVenda, selo);
                         double novoPrecoAluguel = booksMethods.seloLivroAluguel(priceAluguel, selo);
                         //Chama constructor
-                        books.add(new Livros(title, author, publish, category, novoPrecoVenda, novoPrecoAluguel, quant, selo, dataLivro));
+                        books.add(new Livros(title, author, publish, category, novoPrecoVenda, novoPrecoAluguel, quant, selo, dataLivro, exclusiv));
                         System.out.println("Código do Livro: [" + contadorPosLivro + "]");
                         contadorPosLivro++;
                         break;
@@ -141,27 +145,35 @@ public class TrabalhoPOO01 {
                         codLivro = teclado.nextInt();
                         System.out.println(books.get(codLivro));
                         System.out.println(" ");
-                        
                         break;
+                        
                     case 5:
+                        System.out.println("Insira a data de hoje: ");
+                        primeiroAluguel = teclado.next();
+                        System.out.println("É o primeiro aluguel durante a promoção? [s/n]");
+                        String resposta = teclado.next();
                         System.out.print("Digite o id do livro que deseja alugar: ");
                         codLivro = teclado.nextInt();
                         System.out.println(books.get(codLivro));
                         System.out.print("Insira o código do usuário: ");
                         codUsuario = teclado.nextInt();
                         System.out.println(users.get(codUsuario));
+                        if(resposta.equalsIgnoreCase("s")){
+                            users.get(codUsuario).dataAluguel = primeiroAluguel;
+                        }
+                        
                         System.out.println("Deseja confirmar o aluguel deste livro? [s/n]");
                         resp = teclado.next();
-                        if(resp.equalsIgnoreCase("s")){
+                        if(resp.equalsIgnoreCase("s") && books.get(codLivro).quant != 0 && books.get(codLivro).exclusiv == 2 || books.get(codLivro).exclusiv == 0){
                           int verifUser = booksMethods.verificaUsersAluguel(users.get(codUsuario).tipoUser, books.get(codLivro).selo);
                           int dataResp = comparar.compararData();
-                          int disponibilidade = books.get(codLivro).quant;
                           if(verifUser == 0){
                             System.out.println("Você não pode alugar este livro.");
                           }else{
-                              if(disponibilidade != 0 && dataResp == 1){
+                              if(dataResp == 1){
                                 System.out.println("Livro alugado com sucesso!");
                                 users.get(codUsuario).histAluguel++;
+                                users.get(codUsuario).histAluguelPromo++;
                                 books.get(codLivro).quant--;
                                 books.get(codLivro).historico++;
                                 
@@ -180,11 +192,12 @@ public class TrabalhoPOO01 {
                                 
                             }else{
                                 System.out.println("Data Insirida Inválida");
-                                break;}
+                                break;
+                              }
                               break;
                           }
                           
-                          
+                        
                         }else{
                             System.out.println("Erro ao alugar o livro!");
                             break;
@@ -201,6 +214,7 @@ public class TrabalhoPOO01 {
                         System.out.println("Deseja confirmar a leitura local deste livro? [s/n]");
                         resp = teclado.next();
                         if(resp.equalsIgnoreCase("s")){
+                            if(books.get(codLivro).quant != 0 && books.get(codLivro).exclusiv == 2 || books.get(codLivro).exclusiv == 0){
                             books.get(codLivro).quant--;
                             //Verificando possivel desconto caso o livro seja alugado 100x
                                 int desc100 = booksMethods.verificaLivro100(books.get(codLivro).historico);
@@ -212,7 +226,12 @@ public class TrabalhoPOO01 {
                                 }else if(desc100 != 1 ){
                                 //Nada acontece
                                 }
+                            }else{
+                                System.out.println("Livro para leitura indisponível");
+                                break;
+                            }
                         }else{
+                            System.out.println("Cancelando leitura...");
                             break;
                         }
                     case 7:
@@ -221,16 +240,22 @@ public class TrabalhoPOO01 {
                         String dataHoje = teclado.next();
                         System.out.println("Digite o id do livro que deseja comprar: ");
                         codLivro = teclado.nextInt();
-                        System.out.print(books.get(codLivro));
+                        System.out.println(books.get(codLivro));
                         System.out.println("Insira o código do usuário: ");
                         codUsuario = teclado.nextInt();
                         System.out.println(users.get(codUsuario));
+                        System.out.println("É a primeira compra durante a promoção? [s/n]");
+                        String respos = teclado.next();
+                        //verifica se eh a primeira compra
+                        if(respos.equalsIgnoreCase("s")){
+                        users.get(codUsuario).dataCompra = dataHoje;
+                        }
                         int respTipoUser = booksMethods.verificaUsersCompra(users.get(codUsuario).tipoUser);
                         System.out.print("Deseja confirmar a compra deste livro? [s/n]");
                         resp = teclado.next();
                         if(resp.equalsIgnoreCase("s")){
                             int disponibilidade = books.get(codLivro).quant;
-                            if(disponibilidade != 0){
+                            if(disponibilidade != 0 && books.get(codLivro).exclusiv == 1 || books.get(codLivro).exclusiv == 0){
                             users.get(codUsuario).histCompra++;
                             books.get(codLivro).quant--;
                             users.get(codUsuario).histCompraPromo++;
@@ -332,19 +357,23 @@ public class TrabalhoPOO01 {
                                     }else if(users.get(codUsuario).histAux == 0){
                                     System.out.println("Não há promoções disponíveis para você no momento.");
                                     primeiraCompra = dataHoje;
-                                    users.get(codUsuario).histAux++;          
+                                    users.get(codUsuario).histAux++;
+                                    break;
                         }
                         }else{
                             System.out.println("Erro ao comprar o livro. Indisponível!");
+                            break;
                             }
                             
                         }else{
                             break;
                         }
+                        break;
                         
                     case 8:
                         System.out.println("Saraus acontecem todos os dias 10!");
                         break;
+                        
                     case 9:
                         for(int i=0; i<=books.size(); i++){
                             System.out.println(books.get(i) + "Código do Livro " + i);                                                                           
@@ -383,6 +412,9 @@ public class TrabalhoPOO01 {
                         System.out.println("Opção 3: Avançar meses");
                         System.out.println("Opção 4: Avançar anos");
                         System.out.println("Opção 0: Cancelar");
+                        
+                        
+                        
                         //Escolhe a opção para avançar as datas
                         int opc = avanDate.nextInt();
                         switch(opc){
@@ -417,29 +449,60 @@ public class TrabalhoPOO01 {
                         
                         break;
                     case 13:
-                        System.out.print("Insira o código do usuário para verificação: ");
-                        int codVer = teclado.nextInt();
-                            dataCadastroUser = LocalDate.parse(users.get(codVer).dataCadastro, formatter);
-                                if(dataSis.isAfter(dataCadastroUser)== true){
-                                    dataCadastroUser = LocalDate.parse(users.get(codVer).dataCadastro, formatter);
-                                    caixa.valoresMensal+=caixa.mensalidade(users.get(codVer).tipoUser);
-                                    System.out.println("Valor vencido adicionado!");
-                                    dataCadastroUser.plusMonths(1);
-                                    String novaData = dataCadastroUser.format(formatter);
-                                    users.get(codVer).dataCadastro = novaData;
-                                    break;
-                                }else{
-                                    System.out.println("Sem vencimentos neste user.");
-                                    break;
-                                }
-                                
+                        System.out.println("Iniciando verificação de vencimentos:");
+                        LocalDate cadastroUser;
+                        String novaData;
+                        for(int k = 0; k<=users.size(); k++){
+                        cadastroUser = LocalDate.parse(users.get(k).dataCadastro, formatter);
+                        if(dataSis.isAfter(cadastroUser.plusMonths(1)) == true){
+                         caixa.valoresMensal+=caixa.mensalidade(users.get(k).tipoUser); 
+                          System.out.println("Valor vencido adicionado!");
+                          cadastroUser = cadastroUser.plusMonths(1);
+                          novaData = cadastroUser.format(formatter);
+                          System.out.println(novaData);
+                          users.get(k).dataCadastro = novaData;
+                           break;
+                        }else{
+                            System.out.println("Não há vencimentos pendentes.");
+                             break;
+                        }      
+                           } 
+                           break;
+                        
                     case 14:
+
                         System.out.println("Categorias com desconto: Drama, Aventura");
                         System.out.println("De 01/11/2022 até 01/01/2023");
                         System.out.println("Livros com selo com desconto: Premium");
                         System.out.println("De 01/11/2022 até 01/01/2023");
                         break;
-                                            
+                          
+                        
+                    case 15:
+                        //Resetar a promocao dos 3 meses
+                        System.out.println("Iniciando verificação de vencimentos de promoções");
+                        LocalDate promoData;
+                        LocalDate promoData2;
+                        for(int h = 0; h<=users.size(); h++){
+                            promoData = LocalDate.parse(users.get(h).dataCompra, formatter);
+                            promoData2 = LocalDate.parse(users.get(h).dataAluguel, formatter);
+                            if(dataSis.isAfter(promoData.plusMonths(3)) == true || dataSis.isAfter(promoData2.plusMonths(3)) == true){
+                                System.out.println("Promoção vencida! Resetando valores...");
+                                users.get(h).dataCompra = dataSis.format(formatter);
+                                users.get(h).dataAluguel = dataSis.format(formatter);
+                                users.get(h).histAluguelPromo = 0;
+                                users.get(h).histCompraPromo = 0;
+                                System.out.println("Valores Resetados.");
+                                break;
+                            }else{
+                                System.out.println("Promoções ainda válidas!");
+                                break;
+                            }
+                           
+                        }
+                     
+                        break;
+                        
                     case 0:
                         System.out.println("Saindo");
                         break;
